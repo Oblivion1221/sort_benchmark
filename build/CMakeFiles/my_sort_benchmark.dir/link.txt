@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/my_sort_benchmark.dir/link.d CMakeFiles/my_sort_benchmark.dir/src/main.cpp.o -o my_sort_benchmark

@@ -1,3 +1,0 @@
-/home/iburov/projects/sort_benchmark/build/CMakeFiles/my_sort_benchmark.dir
-/home/iburov/projects/sort_benchmark/build/CMakeFiles/edit_cache.dir
-/home/iburov/projects/sort_benchmark/build/CMakeFiles/rebuild_cache.dir
