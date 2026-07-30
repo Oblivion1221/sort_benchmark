@@ -43,6 +43,7 @@
             if(min_index != i)
             {
                 std::swap(arr[min_index], arr[i]); 
+
             }
         }
     }

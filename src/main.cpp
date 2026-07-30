@@ -13,6 +13,7 @@
 
 int main()
 {
+    //вывод версии
     std::cout << "Запуск проекта: " << PROJECT_NAME << std::endl;
     std::cout << "Текущая версия: " << PROJECT_VERSION << std::endl;
 
