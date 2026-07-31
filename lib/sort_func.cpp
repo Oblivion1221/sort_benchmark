@@ -1,19 +1,23 @@
     #include "sort_bench_lib.h"
+
+    #include <iostream>
     #include <utility>
     #include <algorithm>
+    #include <chrono>
 
-    void BubbleSort(int arr[], int n)
+    //bubbleSort
+    void bubbleSort(std::vector<int> &arr)
     {
-        for(int i = 0; i < n - 1; ++i)
+        if(arr.empty()) return;
+        size_t n = arr.size();
+        for(size_t i = 0; i < n; ++i)
         {
             bool swapped = false;
-            for(int j = 0; j < n - i - 1; ++j)
+            for(size_t j = 0; j < n - i - 1; ++j)
             {
                 if(arr[j] > arr[j + 1])
                 {
-                    int buf = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = buf;
+                    std::swap(arr[j], arr[j + 1]);
                     swapped = true;
                 }
             }
@@ -21,12 +25,15 @@
         }
     }
 
-    void SelectionSort (int arr[], int n)
+    //selectionSort
+    void selectionSort (std::vector<int> &arr)
     {
-        for(int i = 0; i < n - 1; ++i)
+        if(arr.empty()) return;
+        size_t n = arr.size();
+        for(size_t i = 0; i < n; ++i)
         {
-            int min_index = i;
-            for(int j = i + 1; j < n ; ++j)
+            size_t min_index = i;
+            for(size_t j = i + 1; j < n ; ++j)
             {
                 if(arr[j] < arr[min_index])
                 {
@@ -35,13 +42,12 @@
             }
             if(min_index != i)
             {
-                int buf = arr[i];
-                arr[i] = arr[min_index];
-                arr[min_index] = buf; 
+                std::swap(arr[min_index], arr[i]); 
             }
         }
     }
 
+    //quickSort
     int partition(std::vector<int> &arr, int low, int high)
     {
         int pivot = arr[low + (high - low) / 2];
@@ -77,4 +83,28 @@
         {
             quickSort(arr, 0, arr.size() - 1);
         }
+    }
+
+    //benchmark
+    void sorting_benchmark(const std::string &name, void(*sortFunc)(std::vector<int>&), const std::vector<int> &original_arr, int iterations)
+    {
+        std::vector<int> copy_arr = original_arr;
+        sortFunc(copy_arr);
+        doNotOptimizeAway(copy_arr.data());
+
+        auto start = std::chrono::high_resolution_clock::now();
+
+        for(size_t i = 0; i < iterations; ++i)
+        {
+            std::vector<int> test_arr = original_arr;
+            sortFunc(test_arr);
+            doNotOptimizeAway(test_arr.data());    
+        }
+
+        auto end = std::chrono::high_resolution_clock::now();
+
+        auto total_time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+        double average_time = (static_cast<double>(total_time) / iterations) / 1000.0;
+
+        std::cout << name << " average => "<< average_time << "ms " << "( Time for " << iterations << " runs " << total_time / 1000.0 << "ms )" << std::endl;
     }
