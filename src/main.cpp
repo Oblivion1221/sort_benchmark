@@ -29,7 +29,7 @@ int main()
         original_arr[i] = dist(rng);
     }
 
-    std::cout << "Start benchmark => " << "array size = " << size_arr << ", iterations =" << iterations << std::endl;
+    std::cout << "Start benchmark => " << "array size = " << size_arr << ", iterations = " << iterations << std::endl;
     
     std::cout << "Benchmark starting Bubble Sort\n";
     sorting_benchmark("Bubble Sort ", bubbleSort, original_arr, iterations);
