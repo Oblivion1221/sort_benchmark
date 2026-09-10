@@ -6,7 +6,7 @@
     #include <chrono>
 
     //bubbleSort
-    void bubbleSort(std::vector<int> &arr)
+    void bubbleSort(std::vector<double> &arr)
     {
         if(arr.empty()) return;
         size_t n = arr.size();
@@ -26,7 +26,7 @@
     }
 
     //selectionSort
-    void selectionSort (std::vector<int> &arr)
+    void selectionSort (std::vector<double> &arr)
     {
         if(arr.empty()) return;
         size_t n = arr.size();
@@ -48,9 +48,9 @@
     }
 
     //quickSort
-    int partition(std::vector<int> &arr, int low, int high)
+    int partition(std::vector<double> &arr, int low, int high)
     {
-        int pivot = arr[low + (high - low) / 2];
+        double pivot = arr[low + (high - low) / 2];
         int i = low - 1;
         int j = high + 1;
 
@@ -66,7 +66,7 @@
         }
     }
 
-    void quickSort(std::vector<int> &arr, int low, int high)
+    void quickSort(std::vector<double> &arr, int low, int high)
     {
         if(low < high)
         {
@@ -77,7 +77,7 @@
         }
     }
 
-    void quickSort(std::vector<int> &arr)
+    void quickSort(std::vector<double> &arr)
     {
         if(!arr.empty())
         {
@@ -86,9 +86,12 @@
     }
 
     //benchmark
-    void sorting_benchmark(const std::string &name, void(*sortFunc)(std::vector<int>&), const std::vector<int> &original_arr, int iterations)
+    void sorting_benchmark(const std::string &name,
+        void(*sortFunc)(std::vector<double>&),
+        const std::vector<double> &original_arr,
+        int iterations)
     {
-        std::vector<int> copy_arr = original_arr;
+        std::vector<double> copy_arr = original_arr;
         sortFunc(copy_arr);
         doNotOptimizeAway(copy_arr.data());
 
@@ -96,7 +99,7 @@
 
         for(size_t i = 0; i < iterations; ++i)
         {
-            std::vector<int> test_arr = original_arr;
+            std::vector<double> test_arr = original_arr;
             sortFunc(test_arr);
             doNotOptimizeAway(test_arr.data());    
         }

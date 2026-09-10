@@ -5,18 +5,18 @@
 
 
 //bubbleSort
-void bubbleSort(std::vector<int> &arr);
+void bubbleSort(std::vector<double> &arr);
 
 //selectionSort
-void selectionSort(std::vector<int> &arr);
+void selectionSort(std::vector<double> &arr);
 
 
 //quickSort
-int partition(std::vector<int> &arr, int low, int high);
+int partition(std::vector<double> &arr, int low, int high);
 
-void quickSort(std::vector<int> &arr, int low, int high);
+void quickSort(std::vector<double> &arr, int low, int high);
 
-void quickSort(std::vector<int> &arr);
+void quickSort(std::vector<double> &arr);
 
 //benchmark
 template <typename T>
@@ -28,4 +28,7 @@ inline void doNotOptimizeAway(const T* ptr)
     #endif
 }
 
-void sorting_benchmark(const std::string &name, void(*sortFunc)(std::vector<int>&), const std::vector<int> &original_arr, int iterations);
+void sorting_benchmark(const std::string &name,
+                         void(*sortFunc)(std::vector<double>&),
+                         const std::vector<double> &original_arr,
+                         int iterations);

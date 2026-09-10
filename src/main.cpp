@@ -21,9 +21,9 @@ int main()
     std::cout << "print size array and size iterations:\n";
     std::cin >> size_arr >> iterations;
 
-    std::vector<int> original_arr (size_arr);
+    std::vector<double> original_arr (size_arr);
     std::mt19937 rng(42); // Фиксированный сид для честного сравнения
-    std::uniform_int_distribution<int> dist(1, 100000);
+    std::uniform_real_distribution<double> dist(1, 100000);
     
     for (size_t i = 0; i < size_arr; ++i) {
         original_arr[i] = dist(rng);
