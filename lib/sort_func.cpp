@@ -4,9 +4,41 @@
     #include <utility>
     #include <algorithm>
     #include <chrono>
+    #include <vector>
+
+
+    //comparison_of_sorting
+   void comparison_of_sorting(std::vector<SortAlgorithm>& vec)
+{
+    size_t n = vec.size();
+    if (n == 0) return;
+
+    for (size_t i = 0; i < n; ++i)
+    {
+        size_t min_index = i;
+        for (size_t j = i + 1; j < n; ++j)
+        {
+            if (vec[j].time < vec[min_index].time)
+            {
+                min_index = j;
+            }
+        }
+        if (min_index != i)
+        {
+            std::swap(vec[min_index], vec[i]); 
+        }
+    }
+    
+    std::cout << "faster ---> slower\n"; 
+
+    for(int i = 0; i < n; ++i)
+    {
+        std::cout << i + 1 << " " << vec[i].name << " time = " << vec[i].time << "ms" << std::endl;
+    }
+}
 
     //bubbleSort
-    void bubbleSort(std::vector<double> &arr)
+    void bubbleSort(std::vector<int> &arr)
     {
         if(arr.empty()) return;
         size_t n = arr.size();
@@ -26,7 +58,7 @@
     }
 
     //selectionSort
-    void selectionSort (std::vector<double> &arr)
+    void selectionSort (std::vector<int> &arr)
     {
         if(arr.empty()) return;
         size_t n = arr.size();
@@ -49,50 +81,46 @@
     }
 
     //quickSort
-    int partition(std::vector<double> &arr, int low, int high)
-    {
-        double pivot = arr[low + (high - low) / 2];
-        int i = low - 1;
-        int j = high + 1;
+  size_t partition(std::vector<int>& arr, size_t low, size_t high) {
+    int pivot = arr[low + (high - low) / 2];
+    size_t i = low;
+    size_t j = high;
 
-        while (true)
-        {
-            do {++i;} while (arr[i] < pivot);
+    while (true) {
+        while (arr[i] < pivot) ++i;
+        while (arr[j] > pivot) --j;
 
-            do {--j;} while (arr[j] > pivot);
-            
-            if(i >= j) return j;
+        if (i >= j) return j;
 
-            std::swap(arr[i], arr[j]);
-        }
+        std::swap(arr[i], arr[j]);
+        ++i;
+        --j;
     }
+}
 
-    void quickSort(std::vector<double> &arr, int low, int high)
-    {
-        if(low < high)
-        {
-            int p = partition (arr, low, high);
+void quickSort(std::vector<int>& arr, size_t low, size_t high) {
+    if (low >= high) return;
+    size_t p = partition(arr, low, high);
+    if (p > low)
+        quickSort(arr, low, p);
+    if (p + 1 < high)
+        quickSort(arr, p + 1, high);
+}
 
-            quickSort(arr, low, p);
-            quickSort(arr, p + 1, high);
-        }
-    }
+void quickSort(std::vector<int>& arr) {
+    if (arr.empty()) return;
+    quickSort(arr, 0, arr.size() - 1);
+}
 
-    void quickSort(std::vector<double> &arr)
-    {
-        if(!arr.empty())
-        {
-            quickSort(arr, 0, arr.size() - 1);
-        }
-    }
 
     //benchmark
-    void sorting_benchmark(const std::string &name,
-        void(*sortFunc)(std::vector<double>&),
-        const std::vector<double> &original_arr,
-        int iterations)
+    void sorting_benchmark(SortAlgorithm &data_alg,
+        void(*sortFunc)(std::vector<int>&),
+        const std::vector<int> &original_arr,
+        size_t iterations,
+        std::vector<SortAlgorithm> & vec)
     {
-        std::vector<double> copy_arr = original_arr;
+        std::vector<int> copy_arr = original_arr;
         sortFunc(copy_arr);
         doNotOptimizeAway(copy_arr.data());
 
@@ -100,7 +128,7 @@
 
         for(size_t i = 0; i < iterations; ++i)
         {
-            std::vector<double> test_arr = original_arr;
+            std::vector<int> test_arr = original_arr;
             sortFunc(test_arr);
             doNotOptimizeAway(test_arr.data());    
         }
@@ -110,5 +138,9 @@
         auto total_time = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
         double average_time = (static_cast<double>(total_time) / iterations) / 1000.0;
 
-        std::cout << name << " average => "<< average_time << "ms " << "( Time for " << iterations << " runs " << total_time / 1000.0 << "ms )" << std::endl;
+        std::cout << data_alg.name << " average => "<< average_time << "ms " << "( Time for " << iterations << " runs " << total_time / 1000.0 << "ms )" << std::endl;
+
+        data_alg.time = average_time;
+
+        vec.push_back(data_alg);
     }

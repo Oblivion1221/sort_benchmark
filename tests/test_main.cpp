@@ -5,8 +5,8 @@
 // Тест для Bubble Sort
 TEST(BubbleSortTest, BubbleSorValid) 
 {
-    std::vector<double> arr = {5.6, -3, -8.8, 0, 2};
-    std::vector<double> expected = {-8.8, -3, 0, 2, 5.6};
+    std::vector<int> arr = {5, -3, -8, 0, 2};
+    std::vector<int> expected = {-8, -3, 0, 2, 5};
     
     bubbleSort(arr);
     
@@ -16,8 +16,8 @@ TEST(BubbleSortTest, BubbleSorValid)
 // Тест для Selection Sort
 TEST(SelectionSortTest, SelectionSortValid) 
 {
-    std::vector<double> arr = {9, -10, -2.7, 0.5, 6.6};
-    std::vector<double> expected = {-10, -2.7, 0.5, 6.6, 9};
+    std::vector<int> arr = {9, -10, -2, 0, 6};
+    std::vector<int> expected = {-10, -2, 0, 6, 9};
     
     selectionSort(arr);
     
@@ -27,8 +27,8 @@ TEST(SelectionSortTest, SelectionSortValid)
 // Тест для Quick Sort
 TEST(QuickSortTest, QuickSortValid) 
 {
-    std::vector<double> arr = {10, -1, 3.8, 0.9, -5.7};
-    std::vector<double> expected = {-5.7, -1, 0.9, 3.8, 10};
+    std::vector<int> arr = {10, -1, 3, 0, -5};
+    std::vector<int> expected = {-5, -1, 0, 3, 10};
     
     // Помним про static_cast, если используем перегруженную версию,
     // либо вызываем функцию напрямую:
@@ -41,7 +41,7 @@ TEST(QuickSortTest, QuickSortValid)
 // Тест на пустой массив
 TEST(SortTest, EmptyArray) 
 {
-    std::vector<double> arr = {};
+    std::vector<int> arr = {};
     
     bubbleSort(arr);
     quickSort(arr);
